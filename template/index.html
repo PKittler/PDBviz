@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>PDBviz</title>
+    <script src="../res/xeogl.js"></script>
+    <script src="../res/vectorTextGeometry.js"></script>
+    <script src="../res/axisHelper.js"></script>
+</head>
+<body>
+    <div id="viewport" style="width: 100%; height: 100%; border: 1px solid black;"></div>
+
+    <script>
+        var scene = xeogl.getDefaultScene();
+
+        var canvas = scene.canvas;
+
+        var container = document.getElementById("viewport");
+        container.appendChild(canvas.canvas);
+
+        var x_obj_axis = new xeogl.Geometry({
+            primitive: "lines",
+            positions: [
+                6.0, 0.0, 0.0, -6.0, 0.0, 0.0,
+            ],
+            indices: [
+                0,1,
+            ]
+        });
+
+        var y_obj_axis = new xeogl.Geometry({
+            primitive: "lines",
+            positions: [
+                0.0, 6.0, 0.0, 0.0, -6.0, 0.0,
+            ],
+            indices: [
+                0,1,
+            ]
+        });
+
+        var z_obj_axis = new xeogl.Geometry({
+            primitive: "lines",
+            positions: [
+                0.0, 0.0, 6.0, 0.0, 0.0, -6.0,
+            ],
+            indices: [
+                0,1,
+            ]
+        });
+    </script>
+
+    <script src="../data/atoms.js"></script>
+    <script src="../data/data.js"></script>
+
+    <script>
+        var camera = Molecule.scene.camera;
+
+        camera.zoom(50);
+
+        new xeogl.CameraControl({});
+
+        new xeogl.AxisHelper({
+                camera: scene.camera,
+                size: [200, 200],
+                visible: true
+        });
+    </script>
+</body>
+</html>
