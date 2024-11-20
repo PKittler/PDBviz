@@ -5,9 +5,6 @@ PDBviz visualizes the molecule spatial structure provided by a PDB file. It outp
 ## Dependencies
 The software makes use of xeogl, which is included in this repository. For this, your browser should support at least WebGL 1.
 
-## Restriction
-This tool reads a shortended PDB file in, this means, that only lines starting with ATOM or TER are included in the file. For future versions, this will be extended to the ability to read normal PDB files.
-
 ## Execution
 Start PDBviz via command-line.
 
