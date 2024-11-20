@@ -3,6 +3,7 @@ import sys
 import webbrowser
 import os
 
+# dictionary for Symbol-Name-assignment
 elements = {
     "H": "Hydrogen",
     "He": "Helium",
@@ -124,6 +125,7 @@ elements = {
     "Og": "Oganesson"
 }
 
+# dictionary for Symbol-color-assignment
 colors = {
     "H": "[1, 1, 1]",
     "He": "[0.97, 0.45, 0.93]",
@@ -246,15 +248,17 @@ colors = {
 }
 
 
-
+# check if there is a parameter given on start
 if len(sys.argv) < 2:
     print("[ERROR] missing path to PDB")
     sys.exit()
 else:
     print("[INFO] Source:", sys.argv[1])
 
+    # read PDB file
     protein = pd.read_fwf(sys.argv[1], header=None)
 
+    # generate xeogl data out of PDB ATOM position data, including axis
     f = open("data/data.js", "w")
     f.write("var Molecule = new xeogl.Group({\n")
     f.write("    id: \"molecule\",\n")
@@ -276,5 +280,6 @@ else:
     f.write("});\n")
     f.close()
 
+# open the visualization in browser
 url = "file://" + os.path.dirname(os.path.abspath(__file__)) + "/template/index.html"
 webbrowser.open(url, new=2)
