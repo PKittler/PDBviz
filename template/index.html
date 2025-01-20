@@ -58,7 +58,16 @@
 
         camera.zoom(50);
 
-        new xeogl.CameraControl({});
+        const cameraControl = new xeogl.CameraControl({
+            scene: scene // Falls nötig, die Szene referenzieren
+        });
+
+        // Ändere die Scroll-Sensitivität direkt
+        mouseZoomRate = 30.0;  // Zum Beispiel
+
+        new xeogl.CameraControl({
+            mouseZoomRate: mouseZoomRate  // Direkte Anpassung des Zoomverhaltens
+        });
 
         new xeogl.AxisHelper({
                 camera: scene.camera,

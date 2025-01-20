@@ -29393,7 +29393,7 @@ class CameraControl extends Component {
         let over = false;
         const mouseOrbitRate = 0.4;
         const mousePanRate = 0.4;
-        const mouseZoomRate = 5.0;
+        const mouseZoomRate = 0.8;
         const keyboardOrbitRate = .02;
         const keyboardPanRate = .02;
         const keyboardZoomRate = .02;

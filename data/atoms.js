@@ -28,7 +28,7 @@ var Carbon = new xeogl.SphereGeometry({
     widthSegments: 60
 });
 
-var Sulphur = new xeogl.SphereGeometry({
+var Sulfur = new xeogl.SphereGeometry({
     radius: 1.04,
     heightSegments: 60,
     widthSegments: 60

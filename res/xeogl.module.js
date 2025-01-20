@@ -11,12 +11,6 @@
  * http://xeolabs.com/
  */
 
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(factory((global.xeogl = {})));
-}(this, (function (exports) { 'use strict';
-
 class Map {
 
     constructor(items, baseId) {
@@ -29393,7 +29387,7 @@ class CameraControl extends Component {
         let over = false;
         const mouseOrbitRate = 0.4;
         const mousePanRate = 0.4;
-        const mouseZoomRate = 5.0;
+        const mouseZoomRate = 0.8;
         const keyboardOrbitRate = .02;
         const keyboardPanRate = .02;
         const keyboardZoomRate = .02;
@@ -36375,62 +36369,4 @@ const _isString = utils.isString; // Backward compat
 const _apply = utils.apply; // Backward compat
 const _isNumeric = utils.isNumeric;
 
-exports.scenes = scenes;
-exports.getDefaultScene = getDefaultScene;
-exports.setDefaultScene = setDefaultScene;
-exports.scheduleTask = scheduleTask;
-exports.clear = clear;
-exports._isString = _isString;
-exports._apply = _apply;
-exports._isNumeric = _isNumeric;
-exports.WEBGL_INFO = WEBGL_INFO;
-exports.stats = stats;
-exports.math = math;
-exports.Component = Component;
-exports.CameraFlightAnimation = CameraFlightAnimation;
-exports.Canvas = Canvas;
-exports.Spinner = Spinner;
-exports.Clip = Clip;
-exports.CameraControl = CameraControl;
-exports.Geometry = Geometry;
-exports.BoxGeometry = BoxGeometry;
-exports.TorusGeometry = TorusGeometry;
-exports.SphereGeometry = SphereGeometry;
-exports.OBBGeometry = OBBGeometry;
-exports.AABBGeometry = AABBGeometry;
-exports.CylinderGeometry = CylinderGeometry;
-exports.PlaneGeometry = PlaneGeometry;
-exports.Input = Input;
-exports.AmbientLight = AmbientLight;
-exports.DirLight = DirLight;
-exports.PointLight = PointLight;
-exports.SpotLight = SpotLight;
-exports.CubeTexture = CubeTexture;
-exports.LightMap = LightMap;
-exports.ReflectionMap = ReflectionMap;
-exports.Shadow = Shadow;
-exports.Model = Model;
-exports.Mesh = Mesh;
-exports.Group = Group;
-exports.Object = xeoglObject;
-exports.Material = Material;
-exports.PhongMaterial = PhongMaterial;
-exports.LambertMaterial = LambertMaterial;
-exports.SpecularMaterial = SpecularMaterial;
-exports.MetallicMaterial = MetallicMaterial;
-exports.EmphasisMaterial = EmphasisMaterial;
-exports.EdgeMaterial = EdgeMaterial;
-exports.OutlineMaterial = OutlineMaterial;
-exports.Texture = Texture;
-exports.Fresnel = Fresnel;
-exports.Viewport = Viewport;
-exports.Camera = Camera;
-exports.Frustum = Frustum;
-exports.Ortho = Ortho;
-exports.Perspective = Perspective;
-exports.CustomProjection = CustomProjection;
-exports.Scene = Scene;
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
+export { scenes, getDefaultScene, setDefaultScene, scheduleTask, clear, _isString, _apply, _isNumeric, WEBGL_INFO, stats, math, Component, CameraFlightAnimation, Canvas, Spinner, Clip, CameraControl, Geometry, BoxGeometry, TorusGeometry, SphereGeometry, OBBGeometry, AABBGeometry, CylinderGeometry, PlaneGeometry, Input, AmbientLight, DirLight, PointLight, SpotLight, CubeTexture, LightMap, ReflectionMap, Shadow, Model, Mesh, Group, xeoglObject as Object, Material, PhongMaterial, LambertMaterial, SpecularMaterial, MetallicMaterial, EmphasisMaterial, EdgeMaterial, OutlineMaterial, Texture, Fresnel, Viewport, Camera, Frustum, Ortho, Perspective, CustomProjection, Scene };

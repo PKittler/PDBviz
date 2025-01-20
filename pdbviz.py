@@ -2,251 +2,14 @@ import pandas as pd
 import sys
 import webbrowser
 import os
+import re
+import colors
+import res.elements
 
-# dictionary for Symbol-Name-assignment
-elements = {
-    "H": "Hydrogen",
-    "He": "Helium",
-    "Li": "Lithium",
-    "Be": "Beryllium",
-    "B": "Boron",
-    "C": "Carbon",
-    "N": "Nitrogen",
-    "O": "Oxygen",
-    "F": "Fluorine",
-    "Ne": "Neon",
-    "Na": "Sodium",
-    "Mg": "Magnesium",
-    "Al": "Aluminium",
-    "Si": "Silicon",
-    "P": "Phosphorus",
-    "S": "Sulfur",
-    "Cl": "Chlorine",
-    "Ar": "Argon",
-    "K": "Potassium",
-    "Ca": "Calcium",
-    "Sc": "Scandium",
-    "Ti": "Titanium",
-    "V": "Vanadium",
-    "Cr": "Chromium",
-    "Mn": "Manganese",
-    "Fe": "Iron",
-    "Co": "Cobalt",
-    "Ni": "Nickel",
-    "Cu": "Copper",
-    "Zn": "Zinc",
-    "Ga": "Gallium",
-    "Ge": "Germanium",
-    "As": "Arsenic",
-    "Se": "Selenium",
-    "Br": "Bromine",
-    "Kr": "Krypton",
-    "Rb": "Rubidium",
-    "Sr": "Strontium",
-    "Y": "Yttrium",
-    "Zr": "Zirconium",
-    "Nb": "Niobium",
-    "Mo": "Molybdenum",
-    "Tc": "Technetium",
-    "Ru": "Ruthenium",
-    "Rh": "Rhodium",
-    "Pd": "Palladium",
-    "Ag": "Silver",
-    "Cd": "Cadmium",
-    "In": "Indium",
-    "Sn": "Tin",
-    "Sb": "Antimony",
-    "Te": "Tellurium",
-    "I": "Iodine",
-    "Xe": "Xenon",
-    "Cs": "Caesium",
-    "Ba": "Barium",
-    "La": "Lanthanum",
-    "Ce": "Cerium",
-    "Pr": "Praseodymium",
-    "Nd": "Neodymium",
-    "Pm": "Promethium",
-    "Sm": "Samarium",
-    "Eu": "Europium",
-    "Gd": "Gadolinium",
-    "Tb": "Terbium",
-    "Dy": "Dysprosium",
-    "Ho": "Holmium",
-    "Er": "Erbium",
-    "Tm": "Thulium",
-    "Yb": "Ytterbium",
-    "Lu": "Lutetium",
-    "Hf": "Hafnium",
-    "Ta": "Tantalum",
-    "W": "Tungsten",
-    "Re": "Rhenium",
-    "Os": "Osmium",
-    "Ir": "Iridium",
-    "Pt": "Platinum",
-    "Au": "Gold",
-    "Hg": "Mercury",
-    "Tl": "Thallium",
-    "Pb": "Lead",
-    "Bi": "Bismuth",
-    "Po": "Polonium",
-    "At": "Astatine",
-    "Rn": "Radon",
-    "Fr": "Francium",
-    "Ra": "Radium",
-    "Ac": "Actinium",
-    "Th": "Thorium",
-    "Pa": "Protactinium",
-    "U": "Uranium",
-    "Np": "Neptunium",
-    "Pu": "Plutonium",
-    "Am": "Americium",
-    "Cm": "Curium",
-    "Bk": "Berkelium",
-    "Cf": "Californium",
-    "Es": "Einsteinium",
-    "Fm": "Fermium",
-    "Md": "Mendelevium",
-    "No": "Nobelium",
-    "Lr": "Lawrencium",
-    "Rf": "Rutherfordium",
-    "Db": "Dubnium",
-    "Sg": "Seaborgium",
-    "Bh": "Bohrium",
-    "Hs": "Hassium",
-    "Mt": "Meitnerium",
-    "Ds": "Darmstadtium",
-    "Rg": "Roentgenium",
-    "Cn": "Copernicum",
-    "Nh": "Nihonium",
-    "Fl": "Flerovium",
-    "Mc": "Moscovium",
-    "Lv": "Livermorium",
-    "Ts": "Tennessine",
-    "Og": "Oganesson"
-}
+elements = res.elements.elements
+colors = colors.colors_bw_CAonly.colors
 
-# dictionary for Symbol-color-assignment
-colors = {
-    "H": "[1, 1, 1]",
-    "He": "[0.97, 0.45, 0.93]",
-    "Li": "[0.97, 0.45, 0.93]",
-    "Be": "[0.97, 0.45, 0.93]",
-    "B": "[0.97, 0.45, 0.93]",
-    "C": "[0.3, 0.3, 0.3]",
-    "N": "[0.25, 0.67, 0.94]",
-    "O": "[1, 0, 0]",
-    "F": "[0, 1, 0]",
-    "Ne": "[0.97, 0.45, 0.93]",
-    "Na": "[0.33, 0, 0.9]",
-    "Mg": "[0.584, 0.969, 0.467]",
-    "Al": "[0.97, 0.45, 0.93]",
-    "Si": "[0.97, 0.45, 0.93]",
-    "P": "[0.97, 0.45, 0.93]",
-    "S": "[0.97, 0.45, 0.93]",
-    "Cl": "[0.97, 0.45, 0.93]",
-    "Ar": "[0.97, 0.45, 0.93]",
-    "K": "[0.97, 0.45, 0.93]",
-    "Ca": "[0.97, 0.45, 0.93]",
-    "Sc": "[0.97, 0.45, 0.93]",
-    "Ti": "[0.97, 0.45, 0.93]",
-    "V": "[0.97, 0.45, 0.93]",
-    "Cr": "[0.97, 0.45, 0.93]",
-    "Mn": "[0.97, 0.45, 0.93]",
-    "Fe": "[0.97, 0.45, 0.93]",
-    "Co": "[0.97, 0.45, 0.93]",
-    "Ni": "[0.97, 0.45, 0.93]",
-    "Cu": "[0.97, 0.45, 0.93]",
-    "Zn": "[0.97, 0.45, 0.93]",
-    "Ga": "[0.97, 0.45, 0.93]",
-    "Ge": "[0.97, 0.45, 0.93]",
-    "As": "[0.97, 0.45, 0.93]",
-    "Se": "[0.97, 0.45, 0.93]",
-    "Br": "[0.97, 0.45, 0.93]",
-    "Kr": "[0.97, 0.45, 0.93]",
-    "Rb": "[0.97, 0.45, 0.93]",
-    "Sr": "[0.97, 0.45, 0.93]",
-    "Y": "[0.97, 0.45, 0.93]",
-    "Zr": "[0.97, 0.45, 0.93]",
-    "Nb": "[0.97, 0.45, 0.93]",
-    "Mo": "[0.97, 0.45, 0.93]",
-    "Tc": "[0.97, 0.45, 0.93]",
-    "Ru": "[0.97, 0.45, 0.93]",
-    "Rh": "[0.97, 0.45, 0.93]",
-    "Pd": "[0.97, 0.45, 0.93]",
-    "Ag": "[0.97, 0.45, 0.93]",
-    "Cd": "[0.97, 0.45, 0.93]",
-    "In": "[0.97, 0.45, 0.93]",
-    "Sn": "[0.97, 0.45, 0.93]",
-    "Sb": "[0.97, 0.45, 0.93]",
-    "Te": "[0.97, 0.45, 0.93]",
-    "I": "[0.97, 0.45, 0.93]",
-    "Xe": "[0.97, 0.45, 0.93]",
-    "Cs": "[0.97, 0.45, 0.93]",
-    "Ba": "[0.97, 0.45, 0.93]",
-    "La": "[0.97, 0.45, 0.93]",
-    "Ce": "[0.97, 0.45, 0.93]",
-    "Pr": "[0.97, 0.45, 0.93]",
-    "Nd": "[0.97, 0.45, 0.93]",
-    "Pm": "[0.97, 0.45, 0.93]",
-    "Sm": "[0.97, 0.45, 0.93]",
-    "Eu": "[0.97, 0.45, 0.93]",
-    "Gd": "[0.97, 0.45, 0.93]",
-    "Tb": "[0.97, 0.45, 0.93]",
-    "Dy": "[0.97, 0.45, 0.93]",
-    "Ho": "[0.97, 0.45, 0.93]",
-    "Er": "[0.97, 0.45, 0.93]",
-    "Tm": "[0.97, 0.45, 0.93]",
-    "Yb": "[0.97, 0.45, 0.93]",
-    "Lu": "[0.97, 0.45, 0.93]",
-    "Hf": "[0.97, 0.45, 0.93]",
-    "Ta": "[0.97, 0.45, 0.93]",
-    "W": "[0.97, 0.45, 0.93]",
-    "Re": "[0.97, 0.45, 0.93]",
-    "Os": "[0.97, 0.45, 0.93]",
-    "Ir": "[0.97, 0.45, 0.93]",
-    "Pt": "[0.97, 0.45, 0.93]",
-    "Au": "[0.97, 0.45, 0.93]",
-    "Hg": "[0.97, 0.45, 0.93]",
-    "Tl": "[0.97, 0.45, 0.93]",
-    "Pb": "[0.97, 0.45, 0.93]",
-    "Bi": "[0.97, 0.45, 0.93]",
-    "Po": "[0.97, 0.45, 0.93]",
-    "At": "[0.97, 0.45, 0.93]",
-    "Rn": "[0.97, 0.45, 0.93]",
-    "Fr": "[0.97, 0.45, 0.93]",
-    "Ra": "[0.97, 0.45, 0.93]",
-    "Ac": "[0.97, 0.45, 0.93]",
-    "Th": "[0.97, 0.45, 0.93]",
-    "Pa": "[0.97, 0.45, 0.93]",
-    "U": "[0.97, 0.45, 0.93]",
-    "Np": "[0.97, 0.45, 0.93]",
-    "Pu": "[0.97, 0.45, 0.93]",
-    "Am": "[0.97, 0.45, 0.93]",
-    "Cm": "[0.97, 0.45, 0.93]",
-    "Bk": "[0.97, 0.45, 0.93]",
-    "Cf": "[0.97, 0.45, 0.93]",
-    "Es": "[0.97, 0.45, 0.93]",
-    "Fm": "[0.97, 0.45, 0.93]",
-    "Md": "[0.97, 0.45, 0.93]",
-    "No": "[0.97, 0.45, 0.93]",
-    "Lr": "[0.97, 0.45, 0.93]",
-    "Rf": "[0.97, 0.45, 0.93]",
-    "Db": "[0.97, 0.45, 0.93]",
-    "Sg": "[0.97, 0.45, 0.93]",
-    "Bh": "[0.97, 0.45, 0.93]",
-    "Hs": "[0.97, 0.45, 0.93]",
-    "Mt": "[0.97, 0.45, 0.93]",
-    "Ds": "[0.97, 0.45, 0.93]",
-    "Rg": "[0.97, 0.45, 0.93]",
-    "Cn": "[0.97, 0.45, 0.93]",
-    "Nh": "[0.97, 0.45, 0.93]",
-    "Fl": "[0.97, 0.45, 0.93]",
-    "Mc": "[0.97, 0.45, 0.93]",
-    "Lv": "[0.97, 0.45, 0.93]",
-    "Ts": "[0.97, 0.45, 0.93]",
-    "Og": "[0.97, 0.45, 0.93]"
-}
-
+atom_pattern = re.compile(r'^(ATOM|HETATM)')
 
 # check if there is a parameter given on start
 if len(sys.argv) < 2:
@@ -255,8 +18,22 @@ if len(sys.argv) < 2:
 else:
     print("[INFO] Source:", sys.argv[1])
 
-    # read PDB file
-    protein = pd.read_fwf(sys.argv[1], header=None)
+    atom_lines = []
+
+    with open(sys.argv[1], 'r') as f:
+        lines = f.readlines()
+
+    for line in lines:
+        if atom_pattern.match(line):
+            atom_type = line[12:16].strip()
+            x_coord = float(line[31:38].strip())
+            y_coord = float(line[39:46].strip())
+            z_coord = float(line[47:54].strip())
+
+            atom_lines.append((atom_type, x_coord, y_coord, z_coord))
+
+    protein = pd.DataFrame(atom_lines)
+
 
     # generate xeogl data out of PDB ATOM position data, including axis
     f = open("data/data.js", "w")
@@ -271,10 +48,9 @@ else:
     f.write("        new xeogl.Mesh({\n            geometry: z_obj_axis,\n            material: new xeogl.PhongMaterial({\n                emissive: [0,0,1],\n                diffuse: [0.0, 0.0, 1],\n                lineWidth: 10\n            })\n        }),\n\n")
 
     for i in range(len(protein)):
-        if protein.iloc[i, 0] == "ATOM":
-            f.write("        new xeogl.Mesh({\n            position: [" + str(protein.iloc[i, 5]) + "," + str(protein.iloc[i, 6]) + "," + str(protein.iloc[i, 7]) + "],\n            scale: [1, 1, 1],\n            rotation: [0, 0, 0],\n")
-            f.write("            geometry: " + elements.get(protein.iloc[i, 8]) + ",\n")
-            f.write("            material: new xeogl.PhongMaterial({\n                diffuse: " + colors.get(protein.iloc[i, 8]) + "\n            })\n        }),\n\n")
+        f.write("        new xeogl.Mesh({\n            position: [" + str(protein.iloc[i, 1]) + "," + str(protein.iloc[i, 2]) + "," + str(protein.iloc[i, 3]) + "],\n            scale: [1, 1, 1],\n            rotation: [0, 0, 0],\n")
+        f.write("            geometry: " + str(elements.get(protein.iloc[i, 0])) + ",\n")
+        f.write("            material: new xeogl.LambertMaterial({\n                color: " + str(colors.get(protein.iloc[i, 0])) + "\n            })\n        }),\n\n")
 
     f.write("   ]\n")
     f.write("});\n")
